@@ -8,10 +8,15 @@ const zombieNames = ["Zombie 1", "Zombie 2"];
 contract("CryptoZombies", (accounts) => {
   let [alice, bob] = accounts;
   let contractInstance;
-
+  
   beforeEach(async () => {
     contractInstance = await CryptoZombies.new();
   });
+
+  // Improvement 1- Added .kill after running each case
+  afterEach(async () => {
+    await contractInstance.kill();
+ });
 
   it("should be able to create a new zombie", async () => {
     const result = await contractInstance.createRandomZombie(zombieNames[0], {
